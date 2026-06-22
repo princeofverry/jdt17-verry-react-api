@@ -53,7 +53,7 @@ const Movies = () => {
     <div className="w-full flex flex-col min-h-screen bg-[#141414] text-zinc-100 box-border font-netflix">
       {/* 1. Hero Banner Carousel */}
       {!isSearching && carouselMovies.length > 0 && (
-        <div className="relative w-full h-[56.25vw] max-h-[120] bg-zinc-950 flex items-end overflow-hidden select-none">
+        <div className="relative w-full h-[56.25vw] max-h-[480px] bg-zinc-950 flex items-end overflow-hidden select-none">
           {carouselMovies.map((movie, idx) => {
             const isActive = idx === currentSlide;
             return (
@@ -69,7 +69,7 @@ const Movies = () => {
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 ease-out"
                   style={{
-                    backgroundImage: `linear-gradient(to top, #141414 0%, rgba(20, 20, 20, 0.3) 50%, rgba(20, 20, 20, 0.6) 100%), url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
+                    backgroundImage: `linear-gradient(to top, #141414 0%, rgba(20, 20, 20, 0.3) 50%, rgba(20, 20, 20, 0.6) 100%), url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`,
                   }}
                 />
 
