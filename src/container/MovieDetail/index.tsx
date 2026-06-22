@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router";
 import { useMovieDetail } from "../../hooks/Movies/useMovieDetail";
+import { ArrowLeft } from "lucide-react";
 
 const MovieDetailContainer = () => {
   const { id } = useParams<{ id: string }>();
@@ -10,7 +11,9 @@ const MovieDetailContainer = () => {
     return (
       <div className="w-full min-h-screen bg-[#141414] flex flex-col justify-center items-center py-24 box-border">
         <div className="animate-spin rounded-full h-10 w-10 border-2 border-t-transparent border-red-600"></div>
-        <p className="text-zinc-400 mt-4 text-sm font-medium">Memuat detail film...</p>
+        <p className="text-zinc-400 mt-4 text-sm font-medium">
+          Memuat detail film...
+        </p>
       </div>
     );
   }
@@ -18,7 +21,9 @@ const MovieDetailContainer = () => {
   if (error || !detail) {
     return (
       <div className="max-w-md mx-auto p-8 bg-zinc-900 border border-zinc-800 rounded-lg text-center mt-20 box-border">
-        <p className="text-red-500 font-semibold text-sm mb-4">{error || "Film tidak ditemukan"}</p>
+        <p className="text-red-500 font-semibold text-sm mb-4">
+          {error || "Film tidak ditemukan"}
+        </p>
         <button
           onClick={() => navigate("/movie-page")}
           className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded transition-colors text-xs md:text-sm cursor-pointer border-0"
@@ -42,8 +47,10 @@ const MovieDetailContainer = () => {
           className="absolute top-0 left-0 right-0 h-[450px] bg-cover bg-center opacity-10 filter blur-md pointer-events-none select-none"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original${detail.backdrop_path})`,
-            maskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)",
+            maskImage:
+              "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)",
           }}
         />
       )}
@@ -51,9 +58,9 @@ const MovieDetailContainer = () => {
       <div className="relative max-w-4xl mx-auto w-full z-10 box-border">
         <button
           onClick={() => navigate("/movie-page")}
-          className="inline-flex items-center gap-2 bg-zinc-900/60 hover:bg-zinc-800/80 border border-zinc-800 text-zinc-300 hover:text-white font-semibold py-1.5 px-4 rounded mb-8 cursor-pointer transition-colors text-xs md:text-sm"
+          className="inline-flex items-center gap-2 hover:bg-zinc-800/80 hover:rounded-lg text-zinc-300 font-semibold py-1.5 px-4 rounded mb-8 cursor-pointer transition-colors text-xs md:text-sm"
         >
-          ← Kembali
+          <ArrowLeft /> Kembali
         </button>
 
         {/* Movie Info Section */}
@@ -62,7 +69,11 @@ const MovieDetailContainer = () => {
           <div className="col-span-1 flex justify-center box-border">
             <div className="w-full max-w-[260px] aspect-[2/3] overflow-hidden rounded-lg border border-zinc-800 shadow-2xl bg-zinc-900">
               <img
-                src={detail.poster_path ? `https://image.tmdb.org/t/p/w500${detail.poster_path}` : "https://via.placeholder.com/500x750?text=No+Poster"}
+                src={
+                  detail.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${detail.poster_path}`
+                    : "https://via.placeholder.com/500x750?text=No+Poster"
+                }
                 alt={detail.title || detail.original_title}
                 className="w-full h-full object-cover"
               />
@@ -75,7 +86,9 @@ const MovieDetailContainer = () => {
               {detail.title || detail.original_title}
             </h1>
             {detail.tagline && (
-              <p className="italic text-zinc-400 text-xs md:text-sm mb-4">"{detail.tagline}"</p>
+              <p className="italic text-zinc-400 text-xs md:text-sm mb-4">
+                "{detail.tagline}"
+              </p>
             )}
 
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs md:text-sm text-zinc-300 font-semibold mb-6">
@@ -97,7 +110,9 @@ const MovieDetailContainer = () => {
             </div>
 
             <div className="mb-6 box-border">
-              <h3 className="text-xs text-zinc-400 font-bold uppercase tracking-wider mb-2">Genre</h3>
+              <h3 className="text-xs text-zinc-400 font-bold uppercase tracking-wider mb-2">
+                Genre
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {detail.genres && detail.genres.length > 0 ? (
                   detail.genres.map((g) => (
@@ -109,15 +124,20 @@ const MovieDetailContainer = () => {
                     </span>
                   ))
                 ) : (
-                  <span className="text-zinc-500 text-xs font-medium">Genre tidak tersedia</span>
+                  <span className="text-zinc-500 text-xs font-medium">
+                    Genre tidak tersedia
+                  </span>
                 )}
               </div>
             </div>
 
             <div className="box-border">
-              <h3 className="text-xs text-zinc-400 font-bold uppercase tracking-wider mb-2">Ringkasan</h3>
+              <h3 className="text-xs text-zinc-400 font-bold uppercase tracking-wider mb-2">
+                Ringkasan
+              </h3>
               <p className="text-zinc-300 text-xs md:text-sm leading-relaxed font-medium m-0">
-                {detail.overview || "Tidak ada deskripsi ringkasan untuk film ini."}
+                {detail.overview ||
+                  "Tidak ada deskripsi ringkasan untuk film ini."}
               </p>
             </div>
           </div>
@@ -141,7 +161,9 @@ const MovieDetailContainer = () => {
           ) : (
             <div className="flex flex-col items-center justify-center bg-zinc-900/50 border border-zinc-800/80 rounded-lg py-16 px-4 text-center mt-4">
               <span className="text-zinc-600 text-3xl mb-2">🎬</span>
-              <p className="text-zinc-400 font-semibold text-sm m-0">Trailer tidak tersedia</p>
+              <p className="text-zinc-400 font-semibold text-sm m-0">
+                Trailer tidak tersedia
+              </p>
             </div>
           )}
         </div>

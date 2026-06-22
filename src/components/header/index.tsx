@@ -5,7 +5,7 @@ const Header = () => {
   const { user, logout } = useToken();
 
   return (
-    <header className="sticky top-0 z-50 w-full glass-nav px-6 py-3.5 box-border">
+    <header className="sticky top-0 z-50 w-full glass-nav px-6 py-1.5 box-border">
       <div className="max-w-5xl mx-auto flex items-center justify-between w-full">
         <div className="flex items-center gap-8 md:gap-12">
           <NavLink
@@ -126,7 +126,7 @@ const Header = () => {
           )}
           <button
             onClick={logout}
-            className="text-[11px] uppercase tracking-wider font-bold border border-zinc-850 hover:border-brand-rose/40 bg-zinc-900/40 hover:bg-brand-rose/5 text-zinc-400 hover:text-brand-rose py-1.5 px-4 rounded-md transition-all duration-300 cursor-pointer shadow-sm active:scale-95"
+            className="bg-red-600 hover:bg-red-700 text-white font-semibold my-4 py-2 px-4 rounded transition-colors text-xs md:text-sm cursor-pointer shadow-md border-0"
           >
             Logout
           </button>

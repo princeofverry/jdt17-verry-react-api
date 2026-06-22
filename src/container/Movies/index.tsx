@@ -6,6 +6,7 @@ import { useUpcoming } from "../../hooks/Movies/useUpcoming";
 import { useTopRated } from "../../hooks/Movies/useTopRated";
 import { useSearchMovies } from "../../hooks/Movies/useSearchMovies";
 import MoviesComponent from "../../components/movies";
+import { Search, Star } from "lucide-react";
 
 const Movies = () => {
   const navigate = useNavigate();
@@ -52,8 +53,8 @@ const Movies = () => {
               {heroMovie.title || heroMovie.original_title}
             </h1>
             <div className="text-xs md:text-sm text-zinc-300 font-semibold mb-3 flex items-center gap-3">
-              <span className="text-amber-500">
-                ★ {heroMovie.vote_average?.toFixed(1) || "0.0"}
+              <span className="text-amber-500 flex flex-row justify-center items-center gap-1">
+                <Star size={12} /> {heroMovie.vote_average?.toFixed(1) || "0.0"}
               </span>
               <span>
                 {heroMovie.release_date
@@ -79,13 +80,13 @@ const Movies = () => {
         <div className="relative max-w-md w-full">
           <input
             type="text"
-            placeholder="Cari film..."
+            placeholder="Cari pelem..."
             value={searchVal}
             onChange={(e) => setSearchVal(e.target.value)}
             className="w-full bg-zinc-900 border border-zinc-800 text-white rounded-md py-2 px-4 pl-10 text-xs md:text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-colors box-border"
           />
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-xs md:text-sm">
-            🔍
+            <Search />
           </span>
           {searchVal && (
             <button
