@@ -44,7 +44,7 @@ const MovieDetailContainer = () => {
       {/* Blurred Backdrop Accent */}
       {detail.backdrop_path && (
         <div
-          className="absolute top-0 left-0 right-0 h-[450px] bg-cover bg-center opacity-10 filter blur-md pointer-events-none select-none"
+          className="absolute top-0 left-0 right-0 h-[450px] bg-cover bg-center opacity-20 filter blur-xs pointer-events-none select-none"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original${detail.backdrop_path})`,
             maskImage:
