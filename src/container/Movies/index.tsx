@@ -6,7 +6,7 @@ import { useUpcoming } from "../../hooks/Movies/useUpcoming";
 import { useTopRated } from "../../hooks/Movies/useTopRated";
 import { useSearchMovies } from "../../hooks/Movies/useSearchMovies";
 import MoviesComponent from "../../components/movies";
-import { Search, Star } from "lucide-react";
+import { Play, Search, Star } from "lucide-react";
 
 const Movies = () => {
   const navigate = useNavigate();
@@ -45,10 +45,10 @@ const Movies = () => {
           <div
             className="absolute inset-0 bg-cover bg-center transition-opacity duration-500"
             style={{
-              backgroundImage: `linear-gradient(to top, #141414 0%, rgba(20, 20, 20, 0.3) 50%, rgba(20, 20, 20, 0.6) 100%), url(https://image.tmdb.org/t/p/original${heroMovie.backdrop_path})`,
+              backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie.backdrop_path})`,
             }}
           />
-          <div className="relative w-full p-4 sm:p-8 md:p-12 text-left bg-gradient-to-t from-[#141414] to-transparent box-border">
+          <div className="relative w-full p-4 sm:p-8 md:p-12 text-left bg-linear-to-t from-[#141414] to-transparent box-border">
             <h1 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-white mb-2 md:mb-4 max-w-xl leading-tight tracking-tight mt-0">
               {heroMovie.title || heroMovie.original_title}
             </h1>
@@ -67,9 +67,9 @@ const Movies = () => {
             </p>
             <button
               onClick={() => movePageDetail(heroMovie.id)}
-              className="bg-red-600 hover:bg-red-700 text-white font-bold my-4 py-2 px-6 rounded transition-colors text-xs md:text-sm cursor-pointer shadow-md border-0"
+              className="bg-red-600 hover:bg-red-700 text-white font-bold my-4 py-2 px-6 rounded transition-colors text-xs md:text-sm cursor-pointer shadow-md border-0 flex flex-row justify-center items-center gap-2"
             >
-              Info Selengkapnya
+              <Play size={16} /> Details
             </button>
           </div>
         </div>
@@ -138,7 +138,7 @@ const Movies = () => {
             {/* Now Playing Row - Infinite Smooth Marquee */}
             <div className="text-left box-border w-full overflow-hidden">
               <h2 className="text-base md:text-lg font-bold text-white mb-3 px-4 md:px-8 tracking-wide">
-                Now Playing
+                <span className="text-red-800 font-bold">|</span> Now Playing
               </h2>
               {loadingNow ? (
                 <div className="px-4 md:px-8 text-zinc-500 text-sm">
@@ -151,15 +151,15 @@ const Movies = () => {
               ) : (
                 <div className="relative overflow-hidden w-full py-2">
                   {/* Left and right fade overlays for visual depth */}
-                  <div className="absolute left-0 top-0 bottom-0 w-12 md:w-20 bg-gradient-to-r from-[#141414] to-transparent z-10 pointer-events-none" />
-                  <div className="absolute right-0 top-0 bottom-0 w-12 md:w-20 bg-gradient-to-l from-[#141414] to-transparent z-10 pointer-events-none" />
+                  <div className="absolute left-0 top-0 bottom-0 w-12 md:w-20 bg-linear-to-r from-[#141414] to-transparent z-10 pointer-events-none" />
+                  <div className="absolute right-0 top-0 bottom-0 w-12 md:w-20 bg-linear-to-l from-[#141414] to-transparent z-10 pointer-events-none" />
 
                   <div className="flex gap-4 w-max animate-marquee hover:[animation-play-state:paused] py-2">
                     {/* First copy of movies */}
                     {nowPlayingMovie.map((el) => (
                       <div
                         key={`${el.id}-first`}
-                        className="w-20 sm:w-28 md:w-36 flex-shrink-0"
+                        className="w-20 sm:w-28 md:w-36 shrink-0"
                       >
                         <MoviesComponent movie={el} onClick={movePageDetail} />
                       </div>
@@ -168,7 +168,7 @@ const Movies = () => {
                     {nowPlayingMovie.map((el) => (
                       <div
                         key={`${el.id}-second`}
-                        className="w-28 sm:w-36 md:w-44 flex-shrink-0"
+                        className="w-28 sm:w-36 md:w-44 shrink-0"
                       >
                         <MoviesComponent movie={el} onClick={movePageDetail} />
                       </div>
@@ -181,14 +181,11 @@ const Movies = () => {
             {/* Popular Movies Row */}
             <div className="text-left box-border">
               <h2 className="text-base md:text-lg font-bold text-white mb-3 px-4 md:px-8 tracking-wide">
-                Popular Movies
+                <span className="text-red-800 font-bold">|</span> Popular Movies
               </h2>
               <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide px-4 md:px-8">
                 {popularMovie.map((el) => (
-                  <div
-                    key={el.id}
-                    className="w-28 sm:w-36 md:w-44 flex-shrink-0"
-                  >
+                  <div key={el.id} className="w-28 sm:w-36 md:w-44 shrink-0">
                     <MoviesComponent movie={el} onClick={movePageDetail} />
                   </div>
                 ))}
@@ -198,7 +195,8 @@ const Movies = () => {
             {/* Upcoming Movies Row */}
             <div className="text-left box-border">
               <h2 className="text-base md:text-lg font-bold text-white mb-3 px-4 md:px-8 tracking-wide">
-                Upcoming Movies
+                <span className="text-red-800 font-bold">|</span> Upcoming
+                Movies
               </h2>
               {loadingUpcoming ? (
                 <div className="px-4 md:px-8 text-zinc-500 text-sm">
@@ -211,10 +209,7 @@ const Movies = () => {
               ) : (
                 <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide px-4 md:px-8">
                   {upcomingMovie.map((el) => (
-                    <div
-                      key={el.id}
-                      className="w-28 sm:w-36 md:w-44 flex-shrink-0"
-                    >
+                    <div key={el.id} className="w-28 sm:w-36 md:w-44 shrink-0">
                       <MoviesComponent movie={el} onClick={movePageDetail} />
                     </div>
                   ))}
@@ -225,7 +220,8 @@ const Movies = () => {
             {/* Top Rated Movies Row */}
             <div className="text-left box-border">
               <h2 className="text-base md:text-lg font-bold text-white mb-3 px-4 md:px-8 tracking-wide">
-                Top Rated Movies
+                <span className="text-red-800 font-bold">|</span> Top Rated
+                Movies
               </h2>
               {loadingTop ? (
                 <div className="px-4 md:px-8 text-zinc-500 text-sm">
@@ -238,10 +234,7 @@ const Movies = () => {
               ) : (
                 <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide px-4 md:px-8">
                   {topRatedMovie.map((el) => (
-                    <div
-                      key={el.id}
-                      className="w-28 sm:w-36 md:w-44 flex-shrink-0"
-                    >
+                    <div key={el.id} className="w-28 sm:w-36 md:w-44 shrink-0">
                       <MoviesComponent movie={el} onClick={movePageDetail} />
                     </div>
                   ))}

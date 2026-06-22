@@ -150,7 +150,7 @@ const CVPage = () => {
         {/* HERO SECTION */}
         <section className="flex flex-row justify-between text-left box-border">
           <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight m-0 mb-2">
-            Verry Kurniawan
+            <span className="text-red-800">Verry</span> Kurniawan
           </h1>
           {/* <p className="text-base sm:text-lg text-zinc-200 font-semibold m-0 mb-4 leading-normal">
             Full-Stack Developer building IoT platforms and AI-powered Computer Vision applications.

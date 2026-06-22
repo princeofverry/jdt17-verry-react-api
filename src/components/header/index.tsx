@@ -1,12 +1,34 @@
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router";
 import { useToken } from "../../hooks/useToken";
 
 const Header = () => {
   const { user, logout } = useToken();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full glass-nav px-6 py-1.5 box-border">
-      <div className="max-w-5xl mx-auto flex items-center justify-between w-full">
+    <header className={`sticky top-0 z-50 w-full transition-all duration-300 px-6 py-1.5 box-border ${
+      isScrolled ? "glass-nav shadow-md" : "bg-transparent border-b border-transparent"
+    }`}>
+      <div className="max-w-5xl mx-auto flex items-center justify-between w-full relative">
         <div className="flex items-center gap-8 md:gap-12">
           <NavLink
             to="/"
@@ -22,7 +44,8 @@ const Header = () => {
               ★
             </span>
           </NavLink>
-          <nav className="flex items-center gap-6 text-xs md:text-sm font-medium">
+          {/* Desktop Nav Links */}
+          <nav className="hidden md:flex items-center gap-6 text-xs md:text-sm font-medium">
             <NavLink
               to="/"
               className={({ isActive }) =>
@@ -103,8 +126,9 @@ const Header = () => {
         </div>
 
         <div className="flex items-center gap-4">
+          {/* User Session Info (Desktop) */}
           {user && user.username && (
-            <div className="flex items-center gap-2.5">
+            <div className="hidden md:flex items-center gap-2.5">
               {user.image ? (
                 <img
                   src={user.image}
@@ -124,14 +148,117 @@ const Header = () => {
               </span>
             </div>
           )}
+          
+          {/* Desktop Logout Button */}
           <button
             onClick={logout}
-            className="bg-red-600 hover:bg-red-700 text-white font-semibold my-4 py-2 px-4 rounded transition-colors text-xs md:text-sm cursor-pointer shadow-md border-0"
+            className="hidden md:block bg-red-600 hover:bg-red-700 text-white font-semibold my-4 py-2 px-4 rounded transition-colors text-xs md:text-sm cursor-pointer shadow-md border-0"
+          >
+            Logout
+          </button>
+
+          {/* Hamburger Menu Toggle (Mobile) */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="block md:hidden text-zinc-400 hover:text-white p-1.5 focus:outline-none transition-colors cursor-pointer bg-transparent border-0"
+            aria-label="Toggle Menu"
+          >
+            {isOpen ? (
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Drawer Menu */}
+      {isOpen && (
+        <div className="md:hidden w-full absolute top-[100%] left-0 right-0 bg-[#0c0c0e]/95 backdrop-blur-xl border-b border-zinc-900/80 px-6 py-5 flex flex-col gap-5 box-border z-40 text-left">
+          <nav className="flex flex-col gap-3 text-sm font-medium">
+            <NavLink
+              to="/"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-brand-rose font-semibold py-1.5 block border-b border-zinc-800/40"
+                  : "text-zinc-400 hover:text-zinc-200 py-1.5 block border-b border-zinc-800/40"
+              }
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/movie-page"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-brand-rose font-semibold py-1.5 block border-b border-zinc-800/40"
+                  : "text-zinc-400 hover:text-zinc-200 py-1.5 block border-b border-zinc-800/40"
+              }
+            >
+              Movies
+            </NavLink>
+            <NavLink
+              to="/todo"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-brand-rose font-semibold py-1.5 block border-b border-zinc-800/40"
+                  : "text-zinc-400 hover:text-zinc-200 py-1.5 block border-b border-zinc-800/40"
+              }
+            >
+              Todo
+            </NavLink>
+            <NavLink
+              to="/cv-page"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-brand-rose font-semibold py-1.5 block border-b border-zinc-800/40"
+                  : "text-zinc-400 hover:text-zinc-200 py-1.5 block border-b border-zinc-800/40"
+              }
+            >
+              CV
+            </NavLink>
+          </nav>
+
+          {/* User Session Info (Mobile) */}
+          {user && user.username && (
+            <div className="flex items-center gap-3 border-t border-zinc-900/40 pt-4">
+              {user.image ? (
+                <img
+                  src={user.image}
+                  alt={user.username}
+                  className="w-8 h-8 rounded-full border border-zinc-800 object-cover bg-zinc-950 shadow-inner"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-xs text-white font-bold">
+                  {user.username.slice(0, 2).toUpperCase()}
+                </div>
+              )}
+              <div className="flex flex-col text-left">
+                <span className="text-[10px] text-zinc-500 uppercase font-bold tracking-wider">Logged in as</span>
+                <span className="text-white font-semibold text-xs">{user.username}</span>
+              </div>
+            </div>
+          )}
+
+          {/* Mobile Logout Button */}
+          <button
+            onClick={() => {
+              setIsOpen(false);
+              logout();
+            }}
+            className="w-full text-center bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-3 rounded transition-colors text-xs cursor-pointer border-0 shadow-md"
           >
             Logout
           </button>
         </div>
-      </div>
+      )}
     </header>
   );
 };
