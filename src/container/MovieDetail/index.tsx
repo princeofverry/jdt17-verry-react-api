@@ -40,7 +40,7 @@ const MovieDetailContainer = () => {
   const runtimeFormatted = hours > 0 ? `${hours}j ${minutes}m` : `${minutes}m`;
 
   return (
-    <div className="relative w-full min-h-screen bg-[#141414] text-zinc-100 px-4 sm:px-6 md:px-8 py-8 flex flex-col text-left box-border select-none overflow-hidden">
+    <div className="relative w-full min-h-screen bg-[#141414] text-zinc-100 px-4 sm:px-6 md:px-8 pt-24 pb-8 flex flex-col text-left box-border select-none overflow-hidden font-netflix">
       {/* Blurred Backdrop Accent */}
       {detail.backdrop_path && (
         <div

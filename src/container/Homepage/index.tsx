@@ -20,8 +20,8 @@ const Index = () => {
   };
 
   return (
-    <>
-      <div className="flex flex-row justify-center items-center my-8 gap-4">
+    <div className="pt-24 pb-8 flex flex-col items-center justify-center w-full min-h-[60vh] box-border">
+      <div className="flex flex-col sm:flex-row justify-center items-center my-8 gap-4">
         {Experience.map((el, index) => {
           return <Box title={el.title} desc={el.desc} index={index} />;
         })}
@@ -40,7 +40,7 @@ const Index = () => {
           movie page
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

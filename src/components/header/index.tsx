@@ -25,7 +25,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className={`sticky top-0 z-50 w-full transition-all duration-300 px-6 py-1.5 box-border ${
+    <header className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 px-6 py-1.5 box-border ${
       isScrolled ? "glass-nav shadow-md" : "bg-transparent border-b border-transparent"
     }`}>
       <div className="max-w-5xl mx-auto flex items-center justify-between w-full relative">

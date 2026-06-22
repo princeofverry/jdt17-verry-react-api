@@ -141,7 +141,7 @@ const CVPage = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#0c0c0e] grid-bg text-zinc-300 px-4 sm:px-6 lg:px-8 py-16 flex flex-col text-left box-border select-none overflow-hidden relative">
+    <div className="w-full min-h-screen bg-[#0c0c0e] grid-bg text-zinc-300 px-4 sm:px-6 lg:px-8 pt-28 pb-16 flex flex-col text-left box-border select-none overflow-hidden relative">
       {/* Decorative Blur Orbs */}
       <div className="absolute top-[20%] left-[-10%] w-[350px] h-[350px] rounded-full bg-brand-rose/5 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-10%] w-[100] h-[100] rounded-full bg-brand-rose/5 blur-[140px] pointer-events-none" />
