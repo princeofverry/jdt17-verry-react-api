@@ -398,7 +398,7 @@ const CVPage = () => {
           </p>
           <div className="flex flex-wrap justify-center my-8 items-center gap-4 text-xs md:text-sm font-semibold text-zinc-400">
             <a
-              href="https://linkedin.com/verry-kurniawan"
+              href="https://id.linkedin.com/in/verry-kurniawan"
               target="_blank"
               rel="noreferrer"
               className="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white px-4 py-2 rounded transition-colors text-center cursor-pointer no-underline"
@@ -414,7 +414,7 @@ const CVPage = () => {
               GitHub
             </a>
             <a
-              href="#"
+              href="https://verry-kurniawan.vercel.app/"
               className="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white px-4 py-2 rounded transition-colors text-center cursor-pointer no-underline"
             >
               Portfolio Page

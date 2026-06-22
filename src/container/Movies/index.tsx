@@ -11,11 +11,23 @@ const Movies = () => {
   const navigate = useNavigate();
   const [searchVal, setSearchVal] = useState<string>("");
 
-  const { nowPlayingMovie, loading: loadingNow, error: errorNow } = useNowPlaying();
+  const {
+    nowPlayingMovie,
+    loading: loadingNow,
+    error: errorNow,
+  } = useNowPlaying();
   const { popularMovie } = usePopular();
-  const { upcomingMovie, loading: loadingUpcoming, error: errorUpcoming } = useUpcoming();
+  const {
+    upcomingMovie,
+    loading: loadingUpcoming,
+    error: errorUpcoming,
+  } = useUpcoming();
   const { topRatedMovie, loading: loadingTop, error: errorTop } = useTopRated();
-  const { searchResults, loading: loadingSearch, error: errorSearch } = useSearchMovies(searchVal);
+  const {
+    searchResults,
+    loading: loadingSearch,
+    error: errorSearch,
+  } = useSearchMovies(searchVal);
 
   const movePageDetail = (id: number) => {
     navigate(`/movie-page/${id}`);
@@ -40,7 +52,9 @@ const Movies = () => {
               {heroMovie.title || heroMovie.original_title}
             </h1>
             <div className="text-xs md:text-sm text-zinc-300 font-semibold mb-3 flex items-center gap-3">
-              <span className="text-amber-500">★ {heroMovie.vote_average?.toFixed(1) || "0.0"}</span>
+              <span className="text-amber-500">
+                ★ {heroMovie.vote_average?.toFixed(1) || "0.0"}
+              </span>
               <span>
                 {heroMovie.release_date
                   ? new Date(heroMovie.release_date).getFullYear()
@@ -52,7 +66,7 @@ const Movies = () => {
             </p>
             <button
               onClick={() => movePageDetail(heroMovie.id)}
-              className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition-colors text-xs md:text-sm cursor-pointer shadow-md border-0"
+              className="bg-red-600 hover:bg-red-700 text-white font-bold my-4 py-2 px-6 rounded transition-colors text-xs md:text-sm cursor-pointer shadow-md border-0"
             >
               Info Selengkapnya
             </button>
@@ -61,7 +75,7 @@ const Movies = () => {
       )}
 
       {/* 2. Search Bar Section */}
-      <div className="px-4 md:px-8 mt-6 text-left box-border">
+      <div className="px-4 md:px-8 text-left box-border">
         <div className="relative max-w-md w-full">
           <input
             type="text"
@@ -98,9 +112,13 @@ const Movies = () => {
                 <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-red-600"></div>
               </div>
             ) : errorSearch ? (
-              <p className="text-red-500 py-6 font-medium text-sm">{errorSearch}</p>
+              <p className="text-red-500 py-6 font-medium text-sm">
+                {errorSearch}
+              </p>
             ) : searchResults.length === 0 ? (
-              <p className="text-zinc-500 py-6 font-medium text-sm">Tidak ada film yang cocok dengan pencarian Anda.</p>
+              <p className="text-zinc-500 py-6 font-medium text-sm">
+                Tidak ada film yang cocok dengan pencarian Anda.
+              </p>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
                 {searchResults.map((movie) => (
@@ -122,25 +140,35 @@ const Movies = () => {
                 Now Playing
               </h2>
               {loadingNow ? (
-                <div className="px-4 md:px-8 text-zinc-500 text-sm">Memuat film...</div>
+                <div className="px-4 md:px-8 text-zinc-500 text-sm">
+                  Memuat film...
+                </div>
               ) : errorNow ? (
-                <div className="px-4 md:px-8 text-red-500 text-sm">{errorNow}</div>
+                <div className="px-4 md:px-8 text-red-500 text-sm">
+                  {errorNow}
+                </div>
               ) : (
                 <div className="relative overflow-hidden w-full py-2">
                   {/* Left and right fade overlays for visual depth */}
                   <div className="absolute left-0 top-0 bottom-0 w-12 md:w-20 bg-gradient-to-r from-[#141414] to-transparent z-10 pointer-events-none" />
                   <div className="absolute right-0 top-0 bottom-0 w-12 md:w-20 bg-gradient-to-l from-[#141414] to-transparent z-10 pointer-events-none" />
-                  
+
                   <div className="flex gap-4 w-max animate-marquee hover:[animation-play-state:paused] py-2">
                     {/* First copy of movies */}
                     {nowPlayingMovie.map((el) => (
-                      <div key={`${el.id}-first`} className="w-28 sm:w-36 md:w-44 flex-shrink-0">
+                      <div
+                        key={`${el.id}-first`}
+                        className="w-20 sm:w-28 md:w-36 flex-shrink-0"
+                      >
                         <MoviesComponent movie={el} onClick={movePageDetail} />
                       </div>
                     ))}
                     {/* Second duplicate copy for seamless looping */}
                     {nowPlayingMovie.map((el) => (
-                      <div key={`${el.id}-second`} className="w-28 sm:w-36 md:w-44 flex-shrink-0">
+                      <div
+                        key={`${el.id}-second`}
+                        className="w-28 sm:w-36 md:w-44 flex-shrink-0"
+                      >
                         <MoviesComponent movie={el} onClick={movePageDetail} />
                       </div>
                     ))}
@@ -156,7 +184,10 @@ const Movies = () => {
               </h2>
               <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide px-4 md:px-8">
                 {popularMovie.map((el) => (
-                  <div key={el.id} className="w-28 sm:w-36 md:w-44 flex-shrink-0">
+                  <div
+                    key={el.id}
+                    className="w-28 sm:w-36 md:w-44 flex-shrink-0"
+                  >
                     <MoviesComponent movie={el} onClick={movePageDetail} />
                   </div>
                 ))}
@@ -169,13 +200,20 @@ const Movies = () => {
                 Upcoming Movies
               </h2>
               {loadingUpcoming ? (
-                <div className="px-4 md:px-8 text-zinc-500 text-sm">Memuat film...</div>
+                <div className="px-4 md:px-8 text-zinc-500 text-sm">
+                  Memuat film...
+                </div>
               ) : errorUpcoming ? (
-                <div className="px-4 md:px-8 text-red-500 text-sm">{errorUpcoming}</div>
+                <div className="px-4 md:px-8 text-red-500 text-sm">
+                  {errorUpcoming}
+                </div>
               ) : (
                 <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide px-4 md:px-8">
                   {upcomingMovie.map((el) => (
-                    <div key={el.id} className="w-28 sm:w-36 md:w-44 flex-shrink-0">
+                    <div
+                      key={el.id}
+                      className="w-28 sm:w-36 md:w-44 flex-shrink-0"
+                    >
                       <MoviesComponent movie={el} onClick={movePageDetail} />
                     </div>
                   ))}
@@ -189,13 +227,20 @@ const Movies = () => {
                 Top Rated Movies
               </h2>
               {loadingTop ? (
-                <div className="px-4 md:px-8 text-zinc-500 text-sm">Memuat film...</div>
+                <div className="px-4 md:px-8 text-zinc-500 text-sm">
+                  Memuat film...
+                </div>
               ) : errorTop ? (
-                <div className="px-4 md:px-8 text-red-500 text-sm">{errorTop}</div>
+                <div className="px-4 md:px-8 text-red-500 text-sm">
+                  {errorTop}
+                </div>
               ) : (
                 <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide px-4 md:px-8">
                   {topRatedMovie.map((el) => (
-                    <div key={el.id} className="w-28 sm:w-36 md:w-44 flex-shrink-0">
+                    <div
+                      key={el.id}
+                      className="w-28 sm:w-36 md:w-44 flex-shrink-0"
+                    >
                       <MoviesComponent movie={el} onClick={movePageDetail} />
                     </div>
                   ))}
