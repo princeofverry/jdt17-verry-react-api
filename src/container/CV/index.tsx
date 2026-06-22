@@ -148,7 +148,7 @@ const CVPage = () => {
 
       <div className="max-w-3xl mx-auto w-full flex flex-col gap-12 box-border relative z-10">
         {/* HERO SECTION */}
-        <section className="flex flex-row justify-between text-left box-border">
+        <section className="flex flex-col sm:flex-row justify-between text-left box-border">
           <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight m-0 mb-2">
             <span className="text-red-800">Verry</span> Kurniawan
           </h1>

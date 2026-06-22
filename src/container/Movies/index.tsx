@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useNowPlaying } from "../../hooks/Movies/useNowPlaying";
 import { usePopular } from "../../hooks/Movies/usePopular";
@@ -11,6 +11,7 @@ import { Play, Search, Star } from "lucide-react";
 const Movies = () => {
   const navigate = useNavigate();
   const [searchVal, setSearchVal] = useState<string>("");
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   const {
     nowPlayingMovie,
@@ -35,48 +36,88 @@ const Movies = () => {
   };
 
   const isSearching = searchVal.trim().length > 0;
-  const heroMovie = nowPlayingMovie[0];
+  const carouselMovies = nowPlayingMovie ? nowPlayingMovie.slice(0, 5) : [];
+
+  // Auto-slide effect for the Hero Carousel
+  useEffect(() => {
+    if (carouselMovies.length === 0 || isSearching) return;
+    
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselMovies.length);
+    }, 6000); // rotate slides every 6 seconds
+
+    return () => clearInterval(interval);
+  }, [carouselMovies.length, isSearching]);
 
   return (
-    <div className="w-full flex flex-col min-h-screen bg-[#141414] text-zinc-100 box-border">
-      {/* 1. Hero Banner */}
-      {!isSearching && heroMovie && (
-        <div className="relative w-full h-[56.25vw] max-h-[480px] bg-zinc-950 flex items-end overflow-hidden">
-          <div
-            className="absolute inset-0 bg-cover bg-center transition-opacity duration-500"
-            style={{
-              backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie.backdrop_path})`,
-            }}
-          />
-          <div className="relative w-full p-4 sm:p-8 md:p-12 text-left bg-linear-to-t from-[#141414] to-transparent box-border">
-            <h1 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-white mb-2 md:mb-4 max-w-xl leading-tight tracking-tight mt-0">
-              {heroMovie.title || heroMovie.original_title}
-            </h1>
-            <div className="text-xs md:text-sm text-zinc-300 font-semibold mb-3 flex items-center gap-3">
-              <span className="text-amber-500 flex flex-row justify-center items-center gap-1">
-                <Star size={12} /> {heroMovie.vote_average?.toFixed(1) || "0.0"}
-              </span>
-              <span>
-                {heroMovie.release_date
-                  ? new Date(heroMovie.release_date).getFullYear()
-                  : "N/A"}
-              </span>
-            </div>
-            <p className="hidden md:block text-zinc-400 text-xs md:text-sm max-w-lg mb-6 line-clamp-3 leading-relaxed">
-              {heroMovie.overview}
-            </p>
-            <button
-              onClick={() => movePageDetail(heroMovie.id)}
-              className="bg-red-600 hover:bg-red-700 text-white font-bold my-4 py-2 px-6 rounded transition-colors text-xs md:text-sm cursor-pointer shadow-md border-0 flex flex-row justify-center items-center gap-2"
-            >
-              <Play size={16} /> Details
-            </button>
+    <div className="w-full flex flex-col min-h-screen bg-[#141414] text-zinc-100 box-border font-netflix">
+      {/* 1. Hero Banner Carousel */}
+      {!isSearching && carouselMovies.length > 0 && (
+        <div className="relative w-full h-[56.25vw] max-h-[480px] bg-zinc-950 flex items-end overflow-hidden select-none">
+          {carouselMovies.map((movie, idx) => {
+            const isActive = idx === currentSlide;
+            return (
+              <div
+                key={movie.id}
+                className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out flex items-end ${
+                  isActive ? "opacity-100 z-10 scale-100" : "opacity-0 z-0 pointer-events-none scale-105"
+                }`}
+              >
+                {/* Backdrop Image with gradient overlay */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 ease-out"
+                  style={{
+                    backgroundImage: `linear-gradient(to top, #141414 0%, rgba(20, 20, 20, 0.3) 50%, rgba(20, 20, 20, 0.6) 100%), url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
+                  }}
+                />
+                
+                {/* Movie Details Info Layer */}
+                <div className="relative w-full p-4 sm:p-8 md:p-12 text-left bg-linear-to-t from-[#141414] to-transparent box-border">
+                  <h1 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-white mb-2 md:mb-4 max-w-xl leading-tight tracking-tight mt-0 drop-shadow-lg">
+                    {movie.title || movie.original_title}
+                  </h1>
+                  <div className="text-xs md:text-sm text-zinc-300 font-semibold mb-3 flex items-center gap-3">
+                    <span className="text-amber-500 flex flex-row justify-center items-center gap-1">
+                      <Star size={12} fill="currentColor" /> {movie.vote_average?.toFixed(1) || "0.0"}
+                    </span>
+                    <span>
+                      {movie.release_date
+                        ? new Date(movie.release_date).getFullYear()
+                        : "N/A"}
+                    </span>
+                  </div>
+                  <p className="hidden md:block text-zinc-400 text-xs md:text-sm max-w-lg mb-6 line-clamp-3 leading-relaxed">
+                    {movie.overview}
+                  </p>
+                  <button
+                    onClick={() => movePageDetail(movie.id)}
+                    className="bg-red-600 hover:bg-red-700 text-white font-bold my-4 py-2 px-6 rounded transition-colors text-xs md:text-sm cursor-pointer shadow-md border-0 flex flex-row justify-center items-center gap-2 hover:scale-105 active:scale-95 duration-200"
+                  >
+                    <Play size={16} fill="currentColor" /> Details
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Carousel dots indicators */}
+          <div className="absolute right-4 bottom-4 md:right-12 md:bottom-8 flex items-center gap-2.5 z-20">
+            {carouselMovies.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`h-2 rounded-full transition-all duration-300 cursor-pointer border-0 p-0 ${
+                  idx === currentSlide ? "bg-red-600 w-6" : "bg-zinc-500/80 hover:bg-zinc-300 w-2"
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
           </div>
         </div>
       )}
 
       {/* 2. Search Bar Section */}
-      <div className="px-4 md:px-8 text-left box-border">
+      <div className="px-4 md:px-8 text-left box-border mt-8">
         <div className="relative max-w-md w-full">
           <input
             type="text"
@@ -86,7 +127,7 @@ const Movies = () => {
             className="w-full bg-zinc-900 border border-zinc-800 text-white rounded-md py-2 px-4 pl-10 text-xs md:text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-colors box-border"
           />
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-xs md:text-sm">
-            <Search />
+            <Search size={14} />
           </span>
           {searchVal && (
             <button
@@ -195,8 +236,7 @@ const Movies = () => {
             {/* Upcoming Movies Row */}
             <div className="text-left box-border">
               <h2 className="text-base md:text-lg font-bold text-white mb-3 px-4 md:px-8 tracking-wide">
-                <span className="text-red-800 font-bold">|</span> Upcoming
-                Movies
+                <span className="text-red-800 font-bold">|</span> Upcoming Movies
               </h2>
               {loadingUpcoming ? (
                 <div className="px-4 md:px-8 text-zinc-500 text-sm">
@@ -220,8 +260,7 @@ const Movies = () => {
             {/* Top Rated Movies Row */}
             <div className="text-left box-border">
               <h2 className="text-base md:text-lg font-bold text-white mb-3 px-4 md:px-8 tracking-wide">
-                <span className="text-red-800 font-bold">|</span> Top Rated
-                Movies
+                <span className="text-red-800 font-bold">|</span> Top Rated Movies
               </h2>
               {loadingTop ? (
                 <div className="px-4 md:px-8 text-zinc-500 text-sm">
