@@ -202,7 +202,7 @@ const CVPage = () => {
                 {technologies.frontend.map((s, idx) => (
                   <span
                     key={idx}
-                    className="bg-zinc-900 border border-zinc-800 text-zinc-300 px-2.5 py-1 rounded text-xs font-semibold"
+                    className="bg-zinc-900 border hover:scale-105 duration-200 border-zinc-800 text-zinc-300 px-2.5 py-1 rounded text-xs font-semibold"
                   >
                     {s}
                   </span>
@@ -217,7 +217,7 @@ const CVPage = () => {
                 {technologies.backend.map((s, idx) => (
                   <span
                     key={idx}
-                    className="bg-zinc-900 border border-zinc-800 text-zinc-300 px-2.5 py-1 rounded text-xs font-semibold"
+                    className="bg-zinc-900 hover:scale-105 duration-200 border border-zinc-800 text-zinc-300 px-2.5 py-1 rounded text-xs font-semibold"
                   >
                     {s}
                   </span>
@@ -232,7 +232,7 @@ const CVPage = () => {
                 {technologies.database.map((s, idx) => (
                   <span
                     key={idx}
-                    className="bg-zinc-900 border border-zinc-800 text-zinc-300 px-2.5 py-1 rounded text-xs font-semibold"
+                    className="bg-zinc-900 hover:scale-105 duration-200 border border-zinc-800 text-zinc-300 px-2.5 py-1 rounded text-xs font-semibold"
                   >
                     {s}
                   </span>
@@ -247,7 +247,7 @@ const CVPage = () => {
                 {technologies.ai.map((s, idx) => (
                   <span
                     key={idx}
-                    className="bg-zinc-900 border border-zinc-800 text-zinc-300 px-2.5 py-1 rounded text-xs font-semibold"
+                    className="bg-zinc-900 hover:scale-105 duration-200 border border-zinc-800 text-zinc-300 px-2.5 py-1 rounded text-xs font-semibold"
                   >
                     {s}
                   </span>
@@ -262,7 +262,7 @@ const CVPage = () => {
                 {technologies.iot.map((s, idx) => (
                   <span
                     key={idx}
-                    className="bg-zinc-900 border border-zinc-800 text-zinc-300 px-2.5 py-1 rounded text-xs font-semibold"
+                    className="bg-zinc-900 hover:scale-105 duration-200 border border-zinc-800 text-zinc-300 px-2.5 py-1 rounded text-xs font-semibold"
                   >
                     {s}
                   </span>
@@ -323,7 +323,7 @@ const CVPage = () => {
             {awards.map((aw, idx) => (
               <div
                 key={idx}
-                className="bg-zinc-900/40 border border-zinc-800/60 rounded-md p-4 flex flex-col gap-1 box-border"
+                className="bg-zinc-900/40 border border-zinc-800/60 hover:scale-105 duration-200 rounded-md p-4 flex flex-col gap-1 box-border"
               >
                 <div className="flex justify-between items-baseline gap-2">
                   <h3 className="text-xs md:text-sm font-bold text-white m-0">
