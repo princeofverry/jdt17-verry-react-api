@@ -141,8 +141,12 @@ const CVPage = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#141414] text-zinc-300 px-4 sm:px-6 lg:px-8 py-16 flex flex-col text-left box-border select-none overflow-hidden relative">
-      <div className="max-w-3xl mx-auto w-full flex flex-col gap-12 box-border">
+    <div className="w-full min-h-screen bg-[#0c0c0e] grid-bg text-zinc-300 px-4 sm:px-6 lg:px-8 py-16 flex flex-col text-left box-border select-none overflow-hidden relative">
+      {/* Decorative Blur Orbs */}
+      <div className="absolute top-[20%] left-[-10%] w-[350px] h-[350px] rounded-full bg-brand-rose/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[20%] right-[-10%] w-[100] h-[100] rounded-full bg-brand-rose/5 blur-[140px] pointer-events-none" />
+
+      <div className="max-w-3xl mx-auto w-full flex flex-col gap-12 box-border relative z-10">
         {/* HERO SECTION */}
         <section className="flex flex-row justify-between text-left box-border">
           <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight m-0 mb-2">
@@ -394,7 +398,7 @@ const CVPage = () => {
           </p>
           <div className="flex flex-wrap justify-center my-8 items-center gap-4 text-xs md:text-sm font-semibold text-zinc-400">
             <a
-              href="https://linkedin.com"
+              href="https://linkedin.com/verry-kurniawan"
               target="_blank"
               rel="noreferrer"
               className="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white px-4 py-2 rounded transition-colors text-center cursor-pointer no-underline"
@@ -402,7 +406,7 @@ const CVPage = () => {
               LinkedIn
             </a>
             <a
-              href="https://github.com"
+              href="https://github.com/princeofverry"
               target="_blank"
               rel="noreferrer"
               className="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white px-4 py-2 rounded transition-colors text-center cursor-pointer no-underline"

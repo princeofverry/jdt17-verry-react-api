@@ -24,7 +24,7 @@ const Todo = () => {
           value={textTodo}
           onChange={(e) => setTextTodo(e.target.value)}
           placeholder="Masukkan todo..."
-          className="flex-1 px-3 py-2 border rounded-md bg-white text-gray-900 border-gray-300
+          className="flex-1 px-3 py-2 border rounded-md bg-gray-300 text-gray-900 border-gray-300
                      dark:bg-gray-800 dark:text-white dark:border-gray-700
                      focus:outline-none focus:ring-1 focus:ring-gray-400"
         />

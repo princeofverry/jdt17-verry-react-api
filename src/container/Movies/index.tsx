@@ -116,8 +116,8 @@ const Movies = () => {
         ) : (
           /* Normal Rows Page */
           <div className="flex flex-col gap-6 box-border">
-            {/* Now Playing Row */}
-            <div className="text-left box-border">
+            {/* Now Playing Row - Infinite Smooth Marquee */}
+            <div className="text-left box-border w-full overflow-hidden">
               <h2 className="text-base md:text-lg font-bold text-white mb-3 px-4 md:px-8 tracking-wide">
                 Now Playing
               </h2>
@@ -126,12 +126,25 @@ const Movies = () => {
               ) : errorNow ? (
                 <div className="px-4 md:px-8 text-red-500 text-sm">{errorNow}</div>
               ) : (
-                <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide px-4 md:px-8">
-                  {nowPlayingMovie.map((el) => (
-                    <div key={el.id} className="w-28 sm:w-36 md:w-44 flex-shrink-0">
-                      <MoviesComponent movie={el} onClick={movePageDetail} />
-                    </div>
-                  ))}
+                <div className="relative overflow-hidden w-full py-2">
+                  {/* Left and right fade overlays for visual depth */}
+                  <div className="absolute left-0 top-0 bottom-0 w-12 md:w-20 bg-gradient-to-r from-[#141414] to-transparent z-10 pointer-events-none" />
+                  <div className="absolute right-0 top-0 bottom-0 w-12 md:w-20 bg-gradient-to-l from-[#141414] to-transparent z-10 pointer-events-none" />
+                  
+                  <div className="flex gap-4 w-max animate-marquee hover:[animation-play-state:paused] py-2">
+                    {/* First copy of movies */}
+                    {nowPlayingMovie.map((el) => (
+                      <div key={`${el.id}-first`} className="w-28 sm:w-36 md:w-44 flex-shrink-0">
+                        <MoviesComponent movie={el} onClick={movePageDetail} />
+                      </div>
+                    ))}
+                    {/* Second duplicate copy for seamless looping */}
+                    {nowPlayingMovie.map((el) => (
+                      <div key={`${el.id}-second`} className="w-28 sm:w-36 md:w-44 flex-shrink-0">
+                        <MoviesComponent movie={el} onClick={movePageDetail} />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
