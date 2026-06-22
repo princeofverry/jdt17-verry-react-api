@@ -1,6 +1,5 @@
 import Box from "../../components/box";
 import { useNavigate } from "react-router";
-import Button from "../../components/button";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -21,23 +20,27 @@ const Index = () => {
   };
 
   return (
-    <>
-      <div className="flex flex-row gap-4">
+    <div className="pt-24 pb-8 flex flex-col items-center justify-center w-full min-h-[60vh] box-border">
+      <div className="flex flex-col sm:flex-row justify-center items-center my-8 gap-4">
         {Experience.map((el, index) => {
           return <Box title={el.title} desc={el.desc} index={index} />;
         })}
       </div>
-      <div className="flex flex-col">
-        <Button
+      <div className="flex flex-row items-center justify-center gap-8">
+        <button
+          className="p-2 rounded-xl hover:scale-110 duration-150 bg-red-800 h-fit w-fit"
           onClick={() => movePage("/cv-page")}
-          content="Move page to CV"
-        />
-        <Button
+        >
+          Move page to CV
+        </button>
+        <button
+          className="p-2 rounded-xl hover:scale-110 duration-150 bg-blue-800 h-fit w-fit"
           onClick={() => movePage("movie-page")}
-          content="Move page to Movies"
-        />
+        >
+          movie page
+        </button>
       </div>
-    </>
+    </div>
   );
 };
 

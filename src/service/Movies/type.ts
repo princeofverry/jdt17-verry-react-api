@@ -9,7 +9,11 @@ export interface Movie {
   id: number;
   overview: string;
   original_title: string;
-  poster_path: string
+  poster_path: string;
+  title?: string;
+  vote_average?: number;
+  release_date?: string;
+  backdrop_path?: string;
 }
 
 export interface Genre {
@@ -26,5 +30,19 @@ export interface MovieDetail extends Movie {
   tagline: string;
   vote_average: number;
   vote_count: number;
+}
+
+export interface VideoResult {
+  id: string;
+  key: string;
+  name: string;
+  site: string;
+  type: string;
+  official: boolean;
+}
+
+export interface MovieVideosResponse {
+  id: number;
+  results: VideoResult[];
 }
 

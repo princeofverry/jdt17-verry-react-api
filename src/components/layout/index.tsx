@@ -1,17 +1,17 @@
-import Header from '../header';
-import { Outlet } from 'react-router';
-import Footer from '../footer';
+import Header from "../header";
+import { Outlet } from "react-router";
+import Footer from "../footer";
 
 const Layout = () => {
   return (
-    <div className="flex flex-col h-screen w-full">
+    <div className="flex flex-col min-h-screen w-full bg-[#141414] text-zinc-100">
       <Header />
-      <div className=" w-full">
+      <main className="w-full flex-grow">
         <Outlet />
-      </div>
+      </main>
       <Footer />
     </div>
   );
-}
+};
 
-export default Layout
+export default Layout;
